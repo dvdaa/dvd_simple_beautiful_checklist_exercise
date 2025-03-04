@@ -33,6 +33,12 @@ class _ListScreenState extends State<ListScreen> {
     setState(() {});
   }
 
+  Future<void> addToList(String task) async {
+    await widget.repository.addItem(task);
+    _controller.clear();
+    _updateList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,18 +68,14 @@ class _ListScreenState extends State<ListScreen> {
                         icon: const Icon(Icons.add),
                         onPressed: () {
                           if (_controller.text.isNotEmpty) {
-                            widget.repository.addItem(_controller.text);
-                            _controller.clear();
-                            _updateList();
+                            addToList(_controller.text);
                           }
                         },
                       ),
                     ),
                     onSubmitted: (value) {
                       if (value.isNotEmpty) {
-                        widget.repository.addItem(value);
-                        _controller.clear();
-                        _updateList();
+                        addToList(value);
                       }
                     },
                   ),

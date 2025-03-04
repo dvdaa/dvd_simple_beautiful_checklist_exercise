@@ -13,6 +13,17 @@ class ItemList extends StatelessWidget {
   final List<String> items;
   final void Function() updateOnChange;
 
+  Future<void> editTask(int index, String task, BuildContext context) async {
+    await repository.editItem(index, task);
+    updateOnChange();
+    Navigator.of(context).pop();
+  }
+
+  Future<void> deleteTask(int index) async {
+    await repository.deleteItem(index);
+    updateOnChange();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -49,9 +60,7 @@ class ItemList extends StatelessWidget {
                           TextButton(
                             child: const Text('Speichern'),
                             onPressed: () {
-                              repository.editItem(index, editController.text);
-                              updateOnChange();
-                              Navigator.of(context).pop();
+                              editTask(index, editController.text, context);
                             },
                           )
                         ],
@@ -63,8 +72,7 @@ class ItemList extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  repository.deleteItem(index);
-                  updateOnChange();
+                  deleteTask(index);
                 },
               ),
             ],
