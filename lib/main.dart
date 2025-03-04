@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_beautiful_checklist_exercise/shared/database_repository.dart';
-import 'package:simple_beautiful_checklist_exercise/shared/mock_database.dart';
+import 'package:simple_beautiful_checklist_exercise/shared/shared_preferences_repository.dart';
 
 import 'features/splash/splash_screen.dart';
 import 'home_screen.dart';
@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // TODO: Hier statt MockDatabase() ein SharedPreferencesRepository() verwenden.
-  final DatabaseRepository repository = MockDatabase();
+  final DatabaseRepository repository = SharedPreferencesRepository();
 
   runApp(MainApp(repository: repository));
 }
@@ -29,10 +29,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.light,
-        textTheme: GoogleFonts.robotoMonoTextTheme(Theme.of(context).textTheme),
-      ),
-      darkTheme: ThemeData(
         brightness: Brightness.dark,
         textTheme: GoogleFonts.robotoMonoTextTheme(
           ThemeData(brightness: Brightness.dark).textTheme,
